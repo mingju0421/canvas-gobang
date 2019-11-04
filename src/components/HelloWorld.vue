@@ -2,6 +2,9 @@
   <div class="hello">
     <h1 ref='title' class="title"></h1>
     <canvas id="canvas" @click="chessOnclick"></canvas>
+    <div>
+      <button @click="restart">重新开始</button>
+    </div>
   </div>
 </template>
 
@@ -26,6 +29,14 @@ export default {
     this.drawChessBoard(this.cxt, this.canvasWidth, this.canvasHeight, this.board)
   },
   methods: {
+    restart () {
+      // this.cxt.clearRect(0, 0, 600, 600)
+      this.canvas = null
+      this.cxt = null
+      this.board = {}
+      this.initCanvas('#canvas', this.canvasWidth, this.canvasHeight)
+      this.drawChessBoard(this.cxt, this.canvasWidth, this.canvasHeight, this.board)
+    },
     // 初始化画布
     initCanvas (DOM, width, height) {
       let canvas = document.querySelector(DOM)
@@ -101,7 +112,8 @@ export default {
       let sum = 0
       // 判断 X 轴
       while (k < (i + 5 > 14 ? 14 : i + 5)) {
-        if (this.board[k][j] === num) sum++
+        // if (this.board[k][j] === num) sum++
+        this.board[k][j] === num ? sum += 1 : sum = 0
         if (sum >= 5) return this.chessOver()
         k++
       }
@@ -109,7 +121,8 @@ export default {
       // 判断 Y 轴
       sum = 0
       while (k < (j + 5 > 14 ? 14 : j + 5)) {
-        if (this.board[i][k] === num) sum++
+        // if (this.board[i][k] === num) sum++
+        this.board[i][k] === num ? sum += 1 : sum = 0
         if (sum >= 5) return this.chessOver()
         k++
       }
@@ -120,7 +133,8 @@ export default {
         let y = j - 4
         while (x < i + 5) {
           if (x >= 0 && y >= 0 && x <= 14 && y <= 14) {
-            if (this.board[x][y] === num) sum++
+            // if (this.board[x][y] === num) sum++
+            this.board[x][y] === num ? sum += 1 : sum = 0
             if (sum >= 5) return this.chessOver()
           }
           x++
@@ -134,7 +148,8 @@ export default {
         let y = j - 4
         while (x > i - 5) {
           if (x >= 0 && y >= 0 && x <= 14 && y <= 14) {
-            if (this.board[x][y] === num) sum++
+            // if (this.board[x][y] === num) sum++
+            this.board[x][y] === num ? sum += 1 : sum = 0
             if (sum >= 5) return this.chessOver()
           }
           x--
